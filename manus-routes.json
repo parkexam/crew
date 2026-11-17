@@ -1,0 +1,9 @@
+{
+  "routes": [
+    { "path": "/", "title": "홈" },
+    { "path": "/run", "title": "러닝" },
+    { "path": "/crew", "title": "크루" },
+    { "path": "/goals", "title": "목표" },
+    { "path": "/balance", "title": "밸런스" }
+  ]
+}
