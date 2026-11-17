@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
@@ -44,23 +43,13 @@ function Router() {
 
 function App() {
   const hasSession = useHasSession();
-  const me = trpc.fitness.me.useQuery(undefined, {
-    enabled: hasSession,
-    retry: false,
-    staleTime: 60_000,
-  });
-
-  const sessionExpired = me.isError && me.error.message.includes("RUNNER_REQUIRED");
-
-  useEffect(() => {
-    if (sessionExpired) clearSession();
-  }, [sessionExpired]);
+  const me = trpc.fitness.me.useQuery(undefined, { enabled: hasSession });
 
   let content;
 
   if (!hasSession) {
     content = <Welcome />;
-  } else if (me.isLoading || sessionExpired) {
+  } else if (me.isLoading) {
     content = <Splash />;
   } else if (me.isError) {
     content = (
@@ -70,8 +59,15 @@ function App() {
         <p className="text-[11px] leading-relaxed text-muted-foreground">
           잠시 후 다시 시도해 주세요. 계속되면 페이지를 새로고침해 주세요.
         </p>
-        <button type="button" onClick={() => me.refetch()} className="btn-primary mt-2">
-          다시 시도
+        <button
+          type="button"
+          onClick={() => {
+            clearSession();
+            me.refetch();
+          }}
+          className="btn-primary mt-2"
+        >
+          처음부터 다시 시작
         </button>
       </div>
     );

@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 
 const STORAGE_KEY = "balmatchum.session.v1";
-const SESSION_EVENT = "balmatchum:session-changed";
+/** 앱 어디서든 세션 변경을 구독할 때 쓰는 이벤트 이름. */
+export const SESSION_EVENT = "balmatchum:session-changed";
 
 export type StoredSession = {
   handle: string;

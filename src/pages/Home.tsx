@@ -17,6 +17,7 @@ import {
   formatPace,
   percent,
   weekdayLabel,
+  withParticle,
 } from "@shared/fitness";
 
 export default function Home() {
@@ -324,7 +325,10 @@ export default function Home() {
               <div className="min-w-0 flex-1">
                 <p className="text-[13px] font-extrabold tracking-[-0.03em] text-ink">
                   {balance.deficits.length > 0
-                    ? `${balance.deficits.map(part => part.label).join(" · ")}가 비어 있어요`
+                    ? `${withParticle(
+                        balance.deficits.map(part => part.label).join(" · "),
+                        "이/가",
+                      )} 비어 있어요`
                     : "균형이 잘 잡혀 있어요"}
                 </p>
                 <p className="mt-1 line-clamp-2 text-[11px] leading-relaxed text-muted-foreground">
